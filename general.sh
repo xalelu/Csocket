@@ -119,7 +119,7 @@ if [ ! -f "$filepath" ];then
     echo "    if (n < 0) { " >> $filepath
     echo "        error(\"ERROR reading from socket\");" >> $filepath
     echo "    }" >> $filepath
-    echo "    printf("%s\n",buffer);" >> $filepath
+    echo "    printf(\"%s\n\", buffer);" >> $filepath
     echo "    close(sockfd);" >> $filepath
     echo "    return 0;" >> $filepath
     echo "}" >> $filepath
