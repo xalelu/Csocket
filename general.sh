@@ -111,12 +111,12 @@ if [ ! -f "$filepath" ];then
     echo "    bzero(buffer,256);" >> $filepath
     echo "    fgets(buffer,255,stdin);" >> $filepath
     echo "    n = write(sockfd,buffer,strlen(buffer));" >> $filepath
-    echo "    if (n < 0) " >> $filepath
+    echo "    if (n < 0) {" >> $filepath
     echo "        error(\"ERROR writing to socket\");" >> $filepath
     echo "    }" >> $filepath
-    echo "    bzero(buffer,256);" >> $filepath
+    echo "    bzero(buffer, 256);" >> $filepath
     echo "    n = read(sockfd,buffer,255);" >> $filepath
-    echo "    if (n < 0){ " >> $filepath
+    echo "    if (n < 0) { " >> $filepath
     echo "        error(\"ERROR reading from socket\");" >> $filepath
     echo "    }" >> $filepath
     echo "    printf("%s\n",buffer);" >> $filepath
