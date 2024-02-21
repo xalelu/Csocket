@@ -54,8 +54,8 @@ if [ ! -f "$filepath" ];then
     echo "    if (n < 0) error("ERROR writing to socket");" >> $filepath
     echo "    close(newsockfd);" >> $filepath
     echo "    close(sockfd);" >> $filepath
-    echo "    return 0; " >> $filepath
-}
+    echo "    return 0;" >> $filepath
+    echo "}" >> $filepath
     chmod 777 "$filepath"
 else
     echo "file server.c has be exists.."
