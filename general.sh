@@ -1,7 +1,7 @@
-＃！/bin/bash
+#!/bin/bash
 
 filepath="./server.c"
-if [ -f "$filepath" ];then
+if [ ! -f "$filepath" ];then
     touch $filepath
     echo "AAAA" > $filepath
     echo "BBBB" > $filepath
@@ -10,7 +10,7 @@ else
 fi
 
 filepath="./client.c"
-if [ -f "$filepath" ];then
+if [ ! -f "$filepath" ];then
     touch $filepath
     echo "XXXX" > $filepath
     echo "YYYY" > $filepath
