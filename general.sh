@@ -30,7 +30,7 @@ if [ ! -f "$filepath" ];then
     echo "    }" >> $filepath
     echo "    sockfd = socket(AF_INET, SOCK_STREAM, 0);" >> $filepath
     echo "    if (sockfd < 0){" >> $filepath
-    echo "        error("ERROR opening socket");" >> $filepath
+    echo "        error(\"ERROR opening socket\");" >> $filepath
     echo "    }" >> $filepath
     echo "    bzero((char *) &serv_addr, sizeof(serv_addr));" >> $filepath
     echo "    portno = atoi(argv[1]);" >> $filepath
@@ -38,20 +38,20 @@ if [ ! -f "$filepath" ];then
     echo "    serv_addr.sin_addr.s_addr = INADDR_ANY;" >> $filepath
     echo "    serv_addr.sin_port = htons(portno);" >> $filepath
     echo "    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){" >> $filepath 
-    echo "        error("ERROR on binding");" >> $filepath
+    echo "        error(\"ERROR on binding\");" >> $filepath
     echo "    }" >> $filepath
     echo "    listen(sockfd,5);" >> $filepath
     echo "    clilen = sizeof(cli_addr);" >> $filepath
     echo "    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);" >> $filepath
     echo "    if (newsockfd < 0){ " >> $filepath
-    echo "        error("ERROR on accept");" >> $filepath
+    echo "        error(\"ERROR on accept\");" >> $filepath
     echo "    }" >> $filepath
     echo "    bzero(buffer,256);" >> $filepath
     echo "    n = read(newsockfd,buffer,255);" >> $filepath
-    echo "    if (n < 0) error("ERROR reading from socket");" >> $filepath
-    echo "    printf("Here is the message: %s\n",buffer);" >> $filepath
-    echo "    n = write(newsockfd,"I got your message",18);" >> $filepath
-    echo "    if (n < 0) error("ERROR writing to socket");" >> $filepath
+    echo "    if (n < 0) error(\"ERROR reading from socket\");" >> $filepath
+    echo "    printf(\"Here is the message: %s\n\",buffer);" >> $filepath
+    echo "    n = write(newsockfd,\"I got your message\",18);" >> $filepath
+    echo "    if (n < 0) error(\"ERROR writing to socket\");" >> $filepath
     echo "    close(newsockfd);" >> $filepath
     echo "    close(sockfd);" >> $filepath
     echo "    return 0;" >> $filepath
