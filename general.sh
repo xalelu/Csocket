@@ -3,8 +3,59 @@
 filepath="./server.c"
 if [ ! -f "$filepath" ];then
     touch $filepath
-    echo "AAAA" >> $filepath
-    echo "BBBB" >> $filepath
+    echo "#include <stdio.h>" >> $filepath
+    echo "#include <stdlib.h>" >> $filepath
+    echo "#include <string.h>" >> $filepath
+    echo "#include <unistd.h>" >> $filepath
+    echo "#include <sys/types.h>" >> $filepath
+    echo "#include <sys/socket.h>" >> $filepath
+    echo "#include <netinet/in.h>" >> $filepath
+    echo "" >> $filepath
+    echo "void error(const char *msg)" >> $filepath
+    echo "{" >> $filepath
+    echo "    perror(msg);" >> $filepath
+    echo "    exit(1);" >> $filepath
+    echo "}" >> $filepath
+    echo "" >> $filepath
+    echo "int main(int argc, char *argv[])" >> $filepath
+    echo "{" >> $filepath
+    echo "    int sockfd, newsockfd, portno;" >> $filepath
+    echo "    socklen_t clilen;" >> $filepath
+    echo "    char buffer[256];" >> $filepath
+    echo "    struct sockaddr_in serv_addr, cli_addr;" >> $filepath
+    echo "    int n;" >> $filepath
+    echo "    if (argc < 2) {" >> $filepath
+    echo "        fprintf(stderr,\"ERROR, no port provided\n\");" >> $filepath
+    echo "        exit(1);" >> $filepath
+    echo "    }" >> $filepath
+    echo "    sockfd = socket(AF_INET, SOCK_STREAM, 0);" >> $filepath
+    echo "    if (sockfd < 0){" >> $filepath
+    echo "        error("ERROR opening socket");" >> $filepath
+    echo "    }" >> $filepath
+    echo "    bzero((char *) &serv_addr, sizeof(serv_addr));" >> $filepath
+    echo "    portno = atoi(argv[1]);" >> $filepath
+    echo "    serv_addr.sin_family = AF_INET;" >> $filepath
+    echo "    serv_addr.sin_addr.s_addr = INADDR_ANY;" >> $filepath
+    echo "    serv_addr.sin_port = htons(portno);" >> $filepath
+    echo "    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){" >> $filepath 
+    echo "        error("ERROR on binding");" >> $filepath
+    echo "    }" >> $filepath
+    echo "    listen(sockfd,5);" >> $filepath
+    echo "    clilen = sizeof(cli_addr);" >> $filepath
+    echo "    newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);" >> $filepath
+    echo "    if (newsockfd < 0){ " >> $filepath
+    echo "        error("ERROR on accept");" >> $filepath
+    echo "    }" >> $filepath
+    echo "    bzero(buffer,256);" >> $filepath
+    echo "    n = read(newsockfd,buffer,255);" >> $filepath
+    echo "    if (n < 0) error("ERROR reading from socket");" >> $filepath
+    echo "    printf("Here is the message: %s\n",buffer);" >> $filepath
+    echo "    n = write(newsockfd,"I got your message",18);" >> $filepath
+    echo "    if (n < 0) error("ERROR writing to socket");" >> $filepath
+    echo "    close(newsockfd);" >> $filepath
+    echo "    close(sockfd);" >> $filepath
+    echo "    return 0; " >> $filepath
+}
     chmod 777 "$filepath"
 else
     echo "file server.c has be exists.."
