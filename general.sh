@@ -93,7 +93,8 @@ if [ ! -f "$filepath" ];then
     echo "    portno = atoi(argv[2]);" >> $filepath
     echo "    sockfd = socket(AF_INET, SOCK_STREAM, 0);" >> $filepath
     echo "    if (sockfd < 0) {" >> $filepath
-    echo "        error("ERROR opening socket");" >> $filepath
+    echo "        error(\"ERROR opening socket\");" >> $filepath
+    echo "    }" >> $filepath
     echo "    server = gethostbyname(argv[1]);" >> $filepath
     echo "    if (server == NULL) {" >> $filepath
     echo "        fprintf(stderr,\"ERROR, no such host\n\");" >> $filepath
@@ -105,16 +106,19 @@ if [ ! -f "$filepath" ];then
     echo "    serv_addr.sin_port = htons(portno);" >> $filepath
     echo "    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){" >> $filepath 
     echo "        error(\"ERROR connecting\");" >> $filepath
+    echo "    }" >> $filepath
     echo "    printf(\"Please enter the message: \");" >> $filepath
     echo "    bzero(buffer,256);" >> $filepath
     echo "    fgets(buffer,255,stdin);" >> $filepath
     echo "    n = write(sockfd,buffer,strlen(buffer));" >> $filepath
     echo "    if (n < 0) " >> $filepath
     echo "        error(\"ERROR writing to socket\");" >> $filepath
+    echo "    }" >> $filepath
     echo "    bzero(buffer,256);" >> $filepath
     echo "    n = read(sockfd,buffer,255);" >> $filepath
     echo "    if (n < 0){ " >> $filepath
     echo "        error(\"ERROR reading from socket\");" >> $filepath
+    echo "    }" >> $filepath
     echo "    printf("%s\n",buffer);" >> $filepath
     echo "    close(sockfd);" >> $filepath
     echo "    return 0;" >> $filepath
