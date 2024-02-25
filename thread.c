@@ -7,9 +7,7 @@ static void *
 threadFunc(void *arg)
 {
     char *s = (char *) arg;
-
     printf("%s", s);
-
     return  (void *) strlen(s);
 }
 
@@ -33,7 +31,6 @@ main (int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    printf("%hread returned $ld\nk", (long) res);
-    
+    printf("%ld read returned $ld\nk", (long) res);
     exit(EXIT_SUCCESS);
 }
